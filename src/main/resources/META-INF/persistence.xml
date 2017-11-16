@@ -7,8 +7,10 @@
             Persistence unit for the JkBox
         </description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        
         <class>jkbox.persistence.models.Playlist</class>
-
+		<class>jkbox.persistence.models.Song</class>
+		
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jkbox" />
