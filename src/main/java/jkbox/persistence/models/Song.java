@@ -2,6 +2,8 @@ package jkbox.persistence.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Song {
@@ -10,8 +12,10 @@ public class Song {
 	private Long id;
 	private String title;
 	private String url;
-	private boolean playing;
-	
+	private int playing;
+	@ManyToOne
+	@JoinColumn(name="id")
+	Playlist pl;
 	
 	public Long getId() {
 		return id;
@@ -31,11 +35,17 @@ public class Song {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
 	public boolean isPlaying() {
-		return playing;
+		if ( this.playing == 0 )
+			return false;
+		return true;
 	}
 	public void setPlaying(boolean playing) {
-		this.playing = playing;
+		if ( playing )
+			this.playing = 1;
+		else
+			this.playing = 0;
 	}
 	
 	
