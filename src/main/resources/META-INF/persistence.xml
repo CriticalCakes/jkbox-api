@@ -7,7 +7,7 @@
             Persistence unit for the JkBox
         </description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>org.halyph.sessiondemo.Event</class>
+        <class>jkbox.persistence.models.Playlist</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
