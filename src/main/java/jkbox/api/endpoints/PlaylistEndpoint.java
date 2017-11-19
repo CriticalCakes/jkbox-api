@@ -11,6 +11,8 @@ import javax.ws.rs.core.Response;
 
 import jkbox.persistence.dao.PlaylistDAO;
 import jkbox.persistence.models.Playlist;
+import jkbox.services.youtube.MetadataModel;
+import jkbox.services.youtube.YoutubeService;
 
 @Path("/playlist")
 public class PlaylistEndpoint {
@@ -35,10 +37,10 @@ public class PlaylistEndpoint {
 	
 	@GET
 	@Path("/")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response get(@QueryParam("name") String nome) {
-		String hello = "Hello " + nome;
-		return Response.status(200).entity(hello).build();
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response get(@QueryParam("url") String url) {
+		MetadataModel mm = YoutubeService.getVideoInfo(url);
+		return Response.status(200).entity(mm).build();
 	}
 	
 	public void getAll() {
