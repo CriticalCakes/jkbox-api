@@ -29,7 +29,7 @@ public class YoutubeService {
         
         MetadataModel metadata = response.readEntity(MetadataModel.class);
         response.close();
-        
+    
         return metadata;
 	}
 
