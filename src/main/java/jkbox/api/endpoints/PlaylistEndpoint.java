@@ -25,7 +25,7 @@ public class PlaylistEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Playlist p) {
 		Playlist created = dao.create(p);
-		return Response.status(201).entity(created).build();
+		return Response.status(Response.Status.CREATED).entity(created).build();
 	}
 	
 	@PUT
@@ -34,14 +34,14 @@ public class PlaylistEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, Playlist pl) {
 		Playlist updated = dao.update(id, pl);
-		return Response.status(200).entity(updated).build();
+		return Response.status(Response.Status.OK).entity(updated).build();
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id")Long id) {
 		dao.delete(id);
-		return Response.status(204).build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	
 	@GET
@@ -49,6 +49,6 @@ public class PlaylistEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
 		Playlist pl = dao.get(id);
-		return Response.status(200).entity(pl).build();
+		return Response.status(Response.Status.OK).entity(pl).build();
 	}
 }
