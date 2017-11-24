@@ -7,6 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import jkbox.api.endpoints.PlaylistEndpoint;
+import jkbox.api.endpoints.SongEndpoint;
 
 @ApplicationPath("/api")
 public class APIApplication extends Application {
@@ -15,6 +16,7 @@ public class APIApplication extends Application {
 
 	public APIApplication() {
 		singletons.add(new PlaylistEndpoint());
+		singletons.add(new SongEndpoint());
 	}
 
 	@Override
