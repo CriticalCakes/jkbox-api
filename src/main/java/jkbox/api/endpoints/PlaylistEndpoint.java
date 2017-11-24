@@ -52,11 +52,4 @@ public class PlaylistEndpoint {
 		Playlist pl = dao.get(id);
 		return Response.status(200).entity(pl).build();
 	}
-	
-	@GET
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void getAll() {
-		
-	}
 }

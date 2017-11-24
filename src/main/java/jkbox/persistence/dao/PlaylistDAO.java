@@ -56,8 +56,4 @@ public class PlaylistDAO {
 		em.close();
 		return pl;
 	}
-	
-	public void getAll() {
-		
-	}
 }
