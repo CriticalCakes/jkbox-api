@@ -2,6 +2,7 @@ package jkbox.persistence.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,7 @@ public class Playlist {
 	private String name;
 	private String author;
 	//@OneToMany(mappedBy="playlist", targetEntity = Song.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@OneToMany
+	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Song> songs;
 	
 	public Playlist() {}

@@ -39,7 +39,6 @@ public class PlaylistEndpoint {
 	
 	@DELETE
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id")Long id) {
 		dao.delete(id);
 		return Response.status(204).build();
