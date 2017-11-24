@@ -1,21 +1,22 @@
 package jkbox.persistence.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Song {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String url;
 	private int playing;
-	@ManyToOne
-	@JoinColumn(name="id")
-	Playlist pl;
+	/*@ManyToOne
+	@JoinColumn(name="playlist")
+	Playlist playlist;*/
 	
 	public Long getId() {
 		return id;
@@ -47,6 +48,10 @@ public class Song {
 		else
 			this.playing = 0;
 	}
-	
-	
+	/*public Playlist getPlaylist() {
+		return playlist;
+	}
+	public void setPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}*/
 }
