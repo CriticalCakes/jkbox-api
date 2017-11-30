@@ -16,7 +16,7 @@ import jkbox.persistence.models.Playlist;
 
 @Path("/playlist")
 /**
- * Interface pública de um WebService para manipulação de Playlists utilizado JSON.
+ * Interface pública de um WebService para manipulação de Playlists utilizando JSON.
  * @author Lincon Dias e Pedro Henrique Fernandes
  *
  */
