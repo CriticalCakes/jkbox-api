@@ -15,6 +15,11 @@ import jkbox.persistence.dao.PlaylistDAO;
 import jkbox.persistence.models.Playlist;
 
 @Path("/playlist")
+/**
+ * Interface pública de um WebService para manipulação de Playlists utilizado JSON.
+ * @author Lincon Dias e Pedro Henrique Fernandes
+ *
+ */
 public class PlaylistEndpoint {
 	
 	private static PlaylistDAO dao = new PlaylistDAO();
@@ -23,6 +28,11 @@ public class PlaylistEndpoint {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Cria uma nova playlist.
+	 * @param p Playlist entidade preenchida pelo resteasy.
+	 * @return Response código de estado HTTP. 201 success, 400 fail. 
+	 */
 	public Response create(Playlist p) {
 		Playlist created = dao.create(p);
 		return Response.status(Response.Status.CREATED).entity(created).build();
@@ -32,6 +42,12 @@ public class PlaylistEndpoint {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Edita uma Playlist especificada pelo id.
+	 * @param id Long id da Playlist que será editada. 
+	 * @param pl Playlist é uma entidade preenchida com novos dados.
+	 * @return Response código de estado HTTP. 200 success, 400 fail.
+	 */
 	public Response update(@PathParam("id") Long id, Playlist pl) {
 		Playlist updated = dao.update(id, pl);
 		return Response.status(Response.Status.OK).entity(updated).build();
@@ -39,6 +55,11 @@ public class PlaylistEndpoint {
 	
 	@DELETE
 	@Path("/{id}")
+	/**
+	 * Exclui uma Playlist especificada pelo id.
+	 * @param id Long id da Playlist que será excluída.
+	 * @return Response código de estado HTTP. 204 success, 400 fail.
+	 */
 	public Response delete(@PathParam("id")Long id) {
 		dao.delete(id);
 		return Response.status(Response.Status.NO_CONTENT).build();
@@ -47,6 +68,11 @@ public class PlaylistEndpoint {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Retorna os dados de uma Playlist especificada pelo id. 
+	 * @param id Long id da Playlist que será retornada.
+	 * @return Response código de estado HTTP. 200 success, 400 fail.
+	 */
 	public Response get(@PathParam("id") Long id) {
 		Playlist pl = dao.get(id);
 		return Response.status(Response.Status.OK).entity(pl).build();
