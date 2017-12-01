@@ -17,6 +17,11 @@ import jkbox.services.youtube.MetadataModel;
 import jkbox.services.youtube.YoutubeService;
 
 @Path("/playlist/{id}/song")
+/**
+ * Interface pública de um WebService para manipulação de Songs utilizando JSON.
+ * @author Lincon Dias e Pedro Henrique Fernandes
+ *
+ */
 public class SongEndpoint {
 	public static SongDAO songDao = new SongDAO();
 	
@@ -24,7 +29,13 @@ public class SongEndpoint {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") Long id, Song s) {
+	/**
+	 * Cria um Song e adiciona-o na Playlist.
+	 * @param id Long id da Playlist na qual será adicionada a Song.
+	 * @param s Song s entidade preenchida pelo resteasy.
+	 * @return Response código de estado HTTP. 201 success, 400 fail.
+	 */
+	public Response create(@PathParam("id") Long id, Song s) {
 		// Busca os dados do video na API do YouTube
 		MetadataModel mm = YoutubeService.getVideoInfo(s.getUrl());
 		s.setTitle(mm.getTitle());
@@ -50,8 +61,13 @@ public class SongEndpoint {
 	}
 
 	@DELETE
-	@Path("/{id}")
-	public Response delete(@PathParam("id") Long id) {
+	@Path("/{song_id}")
+	/**
+	 * Exclui um Song da Playlist.
+	 * @param id Long id da Song que será excluída.
+	 * @return Response código de estado HTTP. 200 success, 400 fail.
+	 */
+	public Response delete(@PathParam("song_id") Long id) {
 		songDao.delete(id);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}

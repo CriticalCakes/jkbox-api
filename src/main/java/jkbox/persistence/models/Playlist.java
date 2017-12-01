@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
+/**
+ * Entidade que representa a Playlist.
+ * @author Lincon Dias e Pedro Henrique Fernandes.
+ *
+ */
 public class Playlist {
 
 	@Id
