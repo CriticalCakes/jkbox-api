@@ -1,9 +1,13 @@
 package jkbox.persistence.dao;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 
+import jkbox.exceptions.PlaylistAlreadyExists;
+import jkbox.exceptions.PlaylistNotFoundException;
 import jkbox.persistence.models.Playlist;
 
 /**
@@ -20,22 +24,22 @@ public class PlaylistDAO {
 	 * @param p Playlist que será persistida.
 	 * @return Playlist persistida.
 	 */
-	public Playlist create(Playlist p) {
+	public Playlist create(Playlist p) throws PlaylistAlreadyExists {
 		try {
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
-			// Faz a persistencia do modelo
-			// TODO tratar exceções na criação
+			// Faz a persistencia do modelo			
 			em.persist(p);
 			
 			em.getTransaction().commit();
 			em.close();
-			return p;
-		}
-		catch() {
 			
 		}
+		catch(EntityExistsException e) {
+			throw new PlaylistAlreadyExists("Playlist já existe");
+		}
+		return p;
 	}
 	
 	/**
@@ -44,7 +48,7 @@ public class PlaylistDAO {
 	 * @param pl Playlist é uma entidade preenchida com novos dados.
 	 * @return Playlist atualizada e persistida.
 	 */
-	public Playlist update(Long id, Playlist pl) {
+	public Playlist update(Long id, Playlist pl) throws PlaylistNotFoundException {
 		try {
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
@@ -53,19 +57,19 @@ public class PlaylistDAO {
 			em.merge(pl);
 			
 			em.getTransaction().commit();
-			em.close();
-			return pl;
+			em.close();			
 		}
-		catch() {
-			
+		catch(EntityNotFoundException e) {
+			throw new PlaylistNotFoundException("Playlist não encontrada");
 		}
+		return pl;
 	}
 	
 	/**
 	 * Exclui uma Playlist especificada pelo id.
 	 * @param id Long id da Playlist que será excluída.
 	 */
-	public void delete(Long id) {
+	public void delete(Long id) throws PlaylistNotFoundException {
 		try {
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
@@ -75,8 +79,8 @@ public class PlaylistDAO {
 			em.getTransaction().commit();
 			em.close();
 		}
-		catch() {
-			
+		catch(EntityNotFoundException e) {
+			throw new PlaylistNotFoundException("Playlist não encontrada");
 		}
 	}
 	
@@ -84,21 +88,20 @@ public class PlaylistDAO {
 	 * Retorna uma Playlist especificada pelo id.
 	 * @param id Long id da Playlist que será retornada.
 	 * @return Playlist especificada.
+	 * @throws PlaylistNotFoundException
 	 */
-	public Playlist get(Long id) {
-		try {
-			EntityManager em = emf.createEntityManager();
-			em.getTransaction().begin();
-			
-			// Consulta o objeto
-			// TODO tratar exceções na busca
-			Playlist pl = em.find(Playlist.class, id);
-			
-			em.close();
-			return pl;
-		}
-		catch() {
-			
-		}
+	public Playlist get(Long id) throws PlaylistNotFoundException {		
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		// Consulta o objeto
+		Playlist pl = em.find(Playlist.class, id);
+		
+		em.close();			
+		
+		if(pl == null) 
+			throw new PlaylistNotFoundException("Playlist não encontrada");
+		
+		return pl;
 	}
 }

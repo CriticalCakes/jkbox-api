@@ -11,6 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import jkbox.exceptions.PlaylistAlreadyExists;
+import jkbox.exceptions.PlaylistNotFoundException;
 import jkbox.persistence.dao.PlaylistDAO;
 import jkbox.persistence.models.Playlist;
 
@@ -35,12 +37,12 @@ public class PlaylistEndpoint {
 	 */
 	public Response create(Playlist p) {
 		try {
-			Playlist created = dao.create(p);
-			return Response.status(Response.Status.CREATED).entity(created).build();
+			Playlist created = dao.create(p);			
 		}
-		catch() {
-			
+		catch(PlaylistAlreadyExists e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
+		return Response.status(Response.Status.CREATED).entity(created).build();
 	}
 	
 	@PUT
@@ -55,12 +57,12 @@ public class PlaylistEndpoint {
 	 */
 	public Response update(@PathParam("id") Long id, Playlist pl) {
 		try {
-			Playlist updated = dao.update(id, pl);
-			return Response.status(Response.Status.OK).entity(updated).build();
+			Playlist updated = dao.update(id, pl);			
 		}
-		catch() {
-			
+		catch(PlaylistNotFoundException e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e).build();
 		}
+		return Response.status(Response.Status.OK).entity(updated).build();
 	}
 	
 	@DELETE
@@ -72,12 +74,12 @@ public class PlaylistEndpoint {
 	 */
 	public Response delete(@PathParam("id")Long id) {
 		try {
-			dao.delete(id);
-			return Response.status(Response.Status.NO_CONTENT).build();
+			dao.delete(id);			
 		}
-		catch() {
-			
+		catch(PlaylistNotFoundException e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e).build();
 		}
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	
 	@GET
@@ -90,11 +92,11 @@ public class PlaylistEndpoint {
 	 */
 	public Response get(@PathParam("id") Long id) {
 		try {
-			Playlist pl = dao.get(id);
-			return Response.status(Response.Status.OK).entity(pl).build();
+			Playlist pl = dao.get(id);			
 		}
-		catch() {
-			
+		catch(PlaylistNotFoundException e) {
+			return Response.status(Response.Status.NOT_FOUND).entity(e).build();
 		}
+		return Response.status(Response.Status.OK).entity(pl).build();
 	}
 }
