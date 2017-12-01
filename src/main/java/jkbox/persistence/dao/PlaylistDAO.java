@@ -21,16 +21,21 @@ public class PlaylistDAO {
 	 * @return Playlist persistida.
 	 */
 	public Playlist create(Playlist p) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		
-		// Faz a persistencia do modelo
-		// TODO tratar exceções na criação
-		em.persist(p);
-		
-		em.getTransaction().commit();
-		em.close();
-		return p;
+		try {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			
+			// Faz a persistencia do modelo
+			// TODO tratar exceções na criação
+			em.persist(p);
+			
+			em.getTransaction().commit();
+			em.close();
+			return p;
+		}
+		catch() {
+			
+		}
 	}
 	
 	/**
@@ -40,15 +45,20 @@ public class PlaylistDAO {
 	 * @return Playlist atualizada e persistida.
 	 */
 	public Playlist update(Long id, Playlist pl) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		
-		pl.setId(id);
-		em.merge(pl);
-		
-		em.getTransaction().commit();
-		em.close();
-		return pl;
+		try {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			
+			pl.setId(id);
+			em.merge(pl);
+			
+			em.getTransaction().commit();
+			em.close();
+			return pl;
+		}
+		catch() {
+			
+		}
 	}
 	
 	/**
@@ -56,13 +66,18 @@ public class PlaylistDAO {
 	 * @param id Long id da Playlist que será excluída.
 	 */
 	public void delete(Long id) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		
-		em.remove(em.getReference(Playlist.class, id));
-		
-		em.getTransaction().commit();
-		em.close();
+		try {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			
+			em.remove(em.getReference(Playlist.class, id));
+			
+			em.getTransaction().commit();
+			em.close();
+		}
+		catch() {
+			
+		}
 	}
 	
 	/**
@@ -71,14 +86,19 @@ public class PlaylistDAO {
 	 * @return Playlist especificada.
 	 */
 	public Playlist get(Long id) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		
-		// Consulta o objeto
-		// TODO tratar exceções na busca
-		Playlist pl = em.find(Playlist.class, id);
-		
-		em.close();
-		return pl;
+		try {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			
+			// Consulta o objeto
+			// TODO tratar exceções na busca
+			Playlist pl = em.find(Playlist.class, id);
+			
+			em.close();
+			return pl;
+		}
+		catch() {
+			
+		}
 	}
 }

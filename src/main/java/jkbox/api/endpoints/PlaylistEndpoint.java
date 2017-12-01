@@ -34,8 +34,13 @@ public class PlaylistEndpoint {
 	 * @return Response código de estado HTTP. 201 success, 400 fail. 
 	 */
 	public Response create(Playlist p) {
-		Playlist created = dao.create(p);
-		return Response.status(Response.Status.CREATED).entity(created).build();
+		try {
+			Playlist created = dao.create(p);
+			return Response.status(Response.Status.CREATED).entity(created).build();
+		}
+		catch() {
+			
+		}
 	}
 	
 	@PUT
@@ -49,8 +54,13 @@ public class PlaylistEndpoint {
 	 * @return Response código de estado HTTP. 200 success, 400 fail.
 	 */
 	public Response update(@PathParam("id") Long id, Playlist pl) {
-		Playlist updated = dao.update(id, pl);
-		return Response.status(Response.Status.OK).entity(updated).build();
+		try {
+			Playlist updated = dao.update(id, pl);
+			return Response.status(Response.Status.OK).entity(updated).build();
+		}
+		catch() {
+			
+		}
 	}
 	
 	@DELETE
@@ -61,8 +71,13 @@ public class PlaylistEndpoint {
 	 * @return Response código de estado HTTP. 204 success, 400 fail.
 	 */
 	public Response delete(@PathParam("id")Long id) {
-		dao.delete(id);
-		return Response.status(Response.Status.NO_CONTENT).build();
+		try {
+			dao.delete(id);
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+		catch() {
+			
+		}
 	}
 	
 	@GET
@@ -74,7 +89,12 @@ public class PlaylistEndpoint {
 	 * @return Response código de estado HTTP. 200 success, 400 fail.
 	 */
 	public Response get(@PathParam("id") Long id) {
-		Playlist pl = dao.get(id);
-		return Response.status(Response.Status.OK).entity(pl).build();
+		try {
+			Playlist pl = dao.get(id);
+			return Response.status(Response.Status.OK).entity(pl).build();
+		}
+		catch() {
+			
+		}
 	}
 }

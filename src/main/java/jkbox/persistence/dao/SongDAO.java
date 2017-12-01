@@ -23,7 +23,12 @@ public class SongDAO {
 	 * @return Song atualizada e persistida.
 	 */	
 	public void update(Long id) {
-		
+		try {
+			
+		}
+		catch() {
+			
+		}
 	}
 	
 	/**
@@ -31,7 +36,12 @@ public class SongDAO {
 	 * @param id Long id da Song que será excluída.
 	 */
 	public void delete(Long id) {
-		
+		try {
+			
+		}
+		catch() {
+			
+		}
 	}
 	
 	/**
@@ -40,7 +50,12 @@ public class SongDAO {
 	 * @return Song especificada.
 	 */
 	public void get(Long id) {
-		
+		try {
+			
+		}
+		catch() {
+			
+		}
 	}
 			
 }
