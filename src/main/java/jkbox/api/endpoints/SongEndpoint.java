@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import jkbox.exceptions.PlaylistNotFoundException;
 import jkbox.persistence.dao.PlaylistDAO;
 import jkbox.persistence.dao.SongDAO;
 import jkbox.persistence.models.Playlist;
@@ -45,17 +46,17 @@ public class SongEndpoint {
 		PlaylistDAO plDao = new PlaylistDAO();
 		
 		// Carrega a playlist
-		Playlist pl = plDao.get(id);
-		
-		// Cria o som no banco
-		songDao.create(s);
-		
-		// Adiciona o song na lista
-		pl.getSongs().add(s);
-		
-		plDao.update(id, pl);
-		
-		//songDao.create(s);
+		Playlist pl;
+		try {
+			pl = plDao.get(id);
+			// Cria o som no banco
+			songDao.create(s);
+			// Adiciona o song na lista
+			pl.getSongs().add(s);
+			plDao.update(id, pl);
+		} catch (PlaylistNotFoundException e) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 		// Retorna o song preenchido
 		return Response.status(Response.Status.CREATED).entity(s).build();
 	}

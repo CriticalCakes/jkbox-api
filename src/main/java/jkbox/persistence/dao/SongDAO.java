@@ -36,12 +36,7 @@ public class SongDAO {
 	 * @return Song atualizada e persistida.
 	 */	
 	public void update(Long id) {
-		try {
-			
-		}
-		catch() {
-			
-		}
+		
 	}
 	
 	/**
@@ -64,11 +59,6 @@ public class SongDAO {
 	 * @return Song especificada.
 	 */
 	public void get(Long id) {
-		try {
-			
-		}
-		catch() {
-			
-		}
+
 	}	
 }
