@@ -6,6 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+/**
+ * Entidade que representa a Song.
+ * @author Lincon Dias e Pedro Henrique Fernandes.
+ *
+ */
 public class Song {
 	
 	@Id
