@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import jkbox.exceptions.PlaylistNotFoundException;
+import jkbox.persistence.models.Playlist;
 import jkbox.persistence.models.Song;
 /**
  * Persistência de dados da Song.
@@ -42,15 +44,18 @@ public class SongDAO {
 	/**
 	 * Exclui uma Song especificada pelo id.
 	 * @param id Long id da Song que será excluída.
+	 * @return s Song para ser removido da playlist
 	 */
-	public void delete(Long id) {
+	public Song delete(Long id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		em.remove(em.getReference(Song.class, id));
+		Song s = em.getReference(Song.class, id);
+		em.remove(s);
 		
 		em.getTransaction().commit();
 		em.close();
+		return s;
 	}
 	
 	/**
@@ -58,7 +63,15 @@ public class SongDAO {
 	 * @param id Long id da Song que será retornada.
 	 * @return Song especificada.
 	 */
-	public void get(Long id) {
-
+	public Song get(Long id) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		// Consulta o objeto
+		Song s = em.find(Song.class, id);
+		
+		em.close();			
+		
+		return s;
 	}	
 }

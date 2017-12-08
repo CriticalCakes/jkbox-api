@@ -45,8 +45,8 @@ public class PlaylistEndpoint {
 		}
 	}
 	
-	@PUT
-	@Path("/{id}")
+	@POST
+	@Path("/{id}/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	/**

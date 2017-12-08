@@ -2,6 +2,7 @@ package jkbox.api.endpoints;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -61,15 +62,37 @@ public class SongEndpoint {
 		return Response.status(Response.Status.CREATED).entity(s).build();
 	}
 
-	@DELETE
+	@OPTIONS
 	@Path("/{song_id}")
+	@Produces("application/json; charset=UTF-8")
+	public Response optionsDelete(@PathParam("song_id") Integer id) {
+	    return Response.ok().build();
+	}
+	
+	@POST
+	@Path("/{song_id}/delete")
 	/**
 	 * Exclui um Song da Playlist.
 	 * @param id Long id da Song que será excluída.
 	 * @return Response código de estado HTTP. 200 success, 400 fail.
 	 */
-	public Response delete(@PathParam("song_id") Long id) {
-		songDao.delete(id);
+	public Response delete(@PathParam("song_id") Long song_id, @PathParam("id") Long playlist_id) {
+		// DAOs para criar o song dentro da playlist
+		PlaylistDAO plDao = new PlaylistDAO();
+		
+		// Carrega a playlist
+		Playlist pl;
+		try {
+			pl = plDao.get(playlist_id);
+			// Song s =songDao.delete(song_id);
+			Song s = songDao.get(song_id);
+			// Remova o song da lista
+			pl.getSongs().remove(s);
+			plDao.update(playlist_id, pl);
+		} catch (PlaylistNotFoundException e) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }
